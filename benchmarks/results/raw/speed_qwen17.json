@@ -1,0 +1,53 @@
+{
+  "label": "qwen17",
+  "model": "qwen3-1.7b",
+  "rounds": 2,
+  "reps": 6,
+  "max_tokens": 128,
+  "load_start": 13.32958984375,
+  "load_end": 13.921875,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 67,
+      "completion_tokens": 128,
+      "decode_tok_s": 25.31,
+      "decode_all": [
+        26.38,
+        27.14,
+        25.15,
+        25.47,
+        23.18,
+        25.14
+      ],
+      "pp_tok_s": 208.2
+    },
+    "ctx500": {
+      "prompt_tokens": 528,
+      "completion_tokens": 128,
+      "decode_tok_s": 25.49,
+      "decode_all": [
+        26.22,
+        25.85,
+        25.88,
+        22.93,
+        21.66,
+        25.13
+      ],
+      "pp_tok_s": 222.2
+    },
+    "ctx2000": {
+      "prompt_tokens": 2092,
+      "completion_tokens": 128,
+      "decode_tok_s": 22.69,
+      "decode_all": [
+        22.98,
+        23.47,
+        22.88,
+        21.09,
+        22.4,
+        22.5
+      ],
+      "pp_tok_s": 181.3
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "label": "llamacpp_r2",
+  "model": "<dir>/Qwen3-30B-A3B-Instruct-2507-UD-Q2_K_XL.gguf",
+  "reps": 3,
+  "max_tokens": 128,
+  "load_start": 12.14697265625,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 63,
+      "completion_tokens": 128,
+      "decode_tok_s": 16.78,
+      "pp_tok_s": 53.49,
+      "prefill_s": 1.05,
+      "wall_s": 8.55,
+      "decode_all": [
+        17.29,
+        15.03,
+        16.78
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx500": {
+      "prompt_tokens": 524,
+      "completion_tokens": 128,
+      "decode_tok_s": 15.06,
+      "pp_tok_s": 65.53,
+      "prefill_s": 7.97,
+      "wall_s": 16.12,
+      "decode_all": [
+        15.6,
+        14.73,
+        15.06
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx2000": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 128,
+      "decode_tok_s": 11.92,
+      "pp_tok_s": 58.25,
+      "prefill_s": 35.91,
+      "wall_s": 46.56,
+      "decode_all": [
+        10.51,
+        11.97,
+        11.92
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    }
+  },
+  "load_end": 13.32275390625
+}

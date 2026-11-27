@@ -1,0 +1,56 @@
+{
+  "status": "experimental; not part of this release; measured by an external tester and not repeated by the project",
+  "hardware": "Linux laptop, AMD Ryzen 7 7435HS + NVIDIA RTX 4050 Laptop 6 GB",
+  "model": "Qwen3-1.7B (a dense model)",
+  "method": "plain cuBLAS offload of the output head and attention projections",
+  "repetitions": 1,
+  "power_profile": "unknown",
+  "metric": "decode tokens per second",
+  "context_tokens": [
+    0,
+    2000
+  ],
+  "results": [
+    {
+      "setting": "CPU default",
+      "decode_tok_s": [
+        39.2,
+        36.1
+      ]
+    },
+    {
+      "setting": "CPU --pareto-max",
+      "decode_tok_s": [
+        48.9,
+        42.6
+      ]
+    },
+    {
+      "setting": "GPU output head only",
+      "decode_tok_s": [
+        45.9,
+        37.7
+      ]
+    },
+    {
+      "setting": "GPU default",
+      "decode_tok_s": [
+        43.6,
+        37.6
+      ]
+    },
+    {
+      "setting": "GPU --pareto-max",
+      "decode_tok_s": [
+        43.6,
+        37.4
+      ]
+    }
+  ],
+  "fastest_setting": "CPU --pareto-max",
+  "agreement_gpu_vs_cpu": {
+    "same_top1_positions": 111,
+    "positions": 112,
+    "greedy_text_differs_from_token": 14
+  }
+}

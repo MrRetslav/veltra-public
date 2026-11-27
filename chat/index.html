@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veltra</title>
+<style>
+  :root {
+    --bg:#09090B; --card:#121216; --card2:#18181D; --line:#26262C; --text:#FAFAFA; --muted:#A1A1AA; --dim:#71717A;
+    --accent:#4351E4; --accent2:#6470F0;
+    --green:#22C55E; --blue:#3B82F6; --orange:#F59E0B; --red:#EF4444; --gray:#71717A;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--text); }
+  body { font:14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  header { position:sticky; top:0; z-index:5; background:rgba(9,9,11,.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .bar { max-width:1180px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .logo { font-weight:700; letter-spacing:-.02em; font-size:17px; display:flex; align-items:center; gap:8px; }
+  .logo i { width:18px; height:18px; border-radius:5px; background:linear-gradient(135deg,var(--accent),#8B5CF6); display:inline-block; }
+  nav.tabs { display:flex; gap:4px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:3px; }
+  nav.tabs button { background:none; border:0; color:var(--muted); font:inherit; padding:5px 14px; border-radius:999px; cursor:pointer; }
+  nav.tabs button.on { background:var(--text); color:var(--bg); font-weight:600; }
+  .spacer { flex:1; }
+  .status { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--gray); display:inline-block; }
+  main { max-width:1180px; margin:0 auto; padding:20px 16px 48px; }
+  section.view { display:none; }
+  section.view.on { display:block; }
+  h2 { font-size:15px; margin:0 0 10px; font-weight:600; letter-spacing:-.01em; }
+  .muted { color:var(--muted); }
+  .small { font-size:12px; }
+  .badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+  .badge { background:var(--card); border:1px solid var(--line); border-radius:999px; padding:6px 12px; font-size:13px; display:flex; align-items:center; gap:8px; }
+  .badge b { font-weight:600; }
+  .badge .k { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px; min-width:0; }
+  .card h3 { margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; }
+  .row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .pill { border-radius:999px; padding:2px 10px; font-size:11px; font-weight:700; letter-spacing:.04em; border:1px solid; white-space:nowrap; }
+  .pill.green { color:var(--green); border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.08); }
+  .pill.blue { color:var(--blue); border-color:rgba(59,130,246,.35); background:rgba(59,130,246,.08); }
+  .pill.orange { color:var(--orange); border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.08); }
+  .pill.red { color:var(--red); border-color:rgba(239,68,68,.35); background:rgba(239,68,68,.08); }
+  .pill.gray { color:var(--gray); border-color:rgba(113,113,122,.35); }
+  .kv { display:grid; grid-template-columns:auto 1fr; gap:2px 12px; font-size:12.5px; }
+  .kv span:nth-child(odd) { color:var(--dim); }
+  .tps { font-size:22px; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+  .btn { background:var(--accent); color:#fff; border:0; border-radius:9px; padding:8px 14px; font:inherit; font-weight:600; cursor:pointer; }
+  .btn:hover { background:var(--accent2); }
+  .btn.ghost { background:transparent; border:1px solid var(--line); color:var(--text); }
+  .btn:disabled { opacity:.45; cursor:default; }
+  .progress { height:6px; background:var(--card2); border-radius:99px; overflow:hidden; }
+  .progress i { display:block; height:100%; background:var(--accent); width:0; transition:width .4s; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-top:18px; }
+  input.text { background:var(--card2); border:1px solid var(--line); color:var(--text); border-radius:9px; padding:8px 10px; font:inherit; flex:1; min-width:200px; }
+  .err { color:var(--red); }
+  /* chat */
+  .chat { display:flex; flex-direction:column; height:calc(100vh - 150px); min-height:420px; }
+  .log { flex:1; overflow-y:auto; padding:4px 2px; }
+  .msg { max-width:820px; margin:10px 0; white-space:pre-wrap; word-wrap:break-word; }
+  .msg.user { margin-left:auto; background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:8px 12px; width:fit-content; }
+  .msg.bot { padding:2px 2px; }
+  .meta { font-size:11.5px; color:var(--dim); margin-top:4px; font-variant-numeric:tabular-nums; }
+  form.ask { display:flex; gap:8px; margin-top:10px; }
+  form.ask textarea { flex:1; background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; resize:vertical; min-height:48px; }
+  iframe.bench { width:100%; height:calc(100vh - 130px); min-height:500px; border:1px solid var(--line); border-radius:14px; background:var(--bg); }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } nav.tabs button { padding:5px 10px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo"><i></i>Veltra</div>
+    <nav class="tabs" id="tabs">
+      <button data-v="hub" class="on">Hardware &amp; Modellen</button>
+      <button data-v="chat">Chat</button>
+      <button data-v="bench">Benchmarks</button>
+    </nav>
+    <span class="spacer"></span>
+    <span class="status"><span class="dot" id="sdot"></span><span id="stext">verbinden…</span></span>
+  </div>
+</header>
+<main>
+  <!-- Hardware & Modellen -->
+  <section class="view on" id="v-hub">
+    <div class="badges" id="hw"><span class="badge muted">Hardware detecteren…</span></div>
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <h2 style="margin:0">Modellen</h2>
+      <span class="small muted" id="refnote"></span>
+    </div>
+    <div class="grid" id="models"></div>
+    <div class="panel" id="dlpanel" style="display:none">
+      <div class="row" style="justify-content:space-between"><b id="dltitle">Download</b><span class="small muted" id="dltext"></span></div>
+      <div class="progress" style="margin-top:8px"><i id="dlbar"></i></div>
+    </div>
+    <div class="panel">
+      <h2>Lokaal model laden</h2>
+      <div class="small muted" style="margin-bottom:8px">Bestanden in <code id="mdir">models</code> verschijnen hieronder; of geef een volledig pad naar een <code>.vlt</code>.</div>
+      <div id="local" class="row" style="margin-bottom:10px"></div>
+      <form class="row" id="pathform">
+        <input class="text" id="pathin" placeholder="C:\Modellen\q30b-qk-best.vlt">
+        <button class="btn ghost" type="submit">Laden</button>
+      </form>
+      <div class="small" id="loadmsg" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <!-- Chat -->
+  <section class="view" id="v-chat">
+    <div class="chat">
+      <div class="log" id="log"><div class="muted small" id="chathint">Laad eerst een model op het startscherm.</div></div>
+      <form class="ask" id="askf">
+        <textarea id="q" placeholder="Stel een vraag… (Enter = versturen, Shift+Enter = nieuwe regel)"></textarea>
+        <button class="btn" id="go">Vraag</button>
+      </form>
+      <div class="row small muted" style="margin-top:6px;justify-content:space-between">
+        <span>temperatuur 0 · max 512 tokens · <a href="/arena">Arena: Veltra vs llama.cpp</a></span>
+        <a href="#" id="clear">Gesprek wissen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benchmarks -->
+  <section class="view" id="v-bench">
+    <iframe class="bench" id="benchframe" title="Veltra benchmarks"></iframe>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(path, body) {
+  const r = await fetch(path, body ? { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) } : { cache:'no-store' });
+  let j = null; try { j = await r.json(); } catch (_) {}
+  if (!r.ok) throw new Error((j && j.error && j.error.message) || ('HTTP ' + r.status));
+  return j;
+}
+let status = null, hw = null;
+
+// ---------------- tabs
+function show(v) {
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  document.querySelectorAll('section.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
+  if (v === 'bench' && !$('benchframe').src) $('benchframe').src = '/benchmarks';
+  if (v === 'chat') $('q').focus();
+  try { localStorage.setItem('veltra.tab', v); } catch (_) {}
+}
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => show(b.dataset.v));
+try { const t = localStorage.getItem('veltra.tab'); if (t) show(t); } catch (_) {}
+
+// ---------------- status bar
+async function refreshStatus() {
+  try {
+    status = await api('/api/status');
+    const dot = $('sdot'), tx = $('stext');
+    if (status.loading) { dot.style.background = 'var(--orange)'; tx.textContent = 'laden: ' + status.loading_file + '…'; }
+    else if (status.loaded) { dot.style.background = 'var(--green)'; tx.textContent = status.model + ' · ' + status.device; }
+    else { dot.style.background = 'var(--gray)'; tx.textContent = 'geen model geladen'; }
+    $('chathint') && ($('chathint').textContent = status.loaded ? 'Model: ' + status.model + ' (' + status.device + ')' : 'Laad eerst een model op het startscherm.');
+    if (status.load_error) $('loadmsg').innerHTML = '<span class="err">' + esc(status.load_error) + '</span>';
+  } catch (e) { $('sdot').style.background = 'var(--red)'; $('stext').textContent = 'server niet bereikbaar'; }
+  return status;
+}
+
+// ---------------- hardware badges
+async function loadHardware() {
+  try {
+    hw = await api('/api/hardware');
+    const isa = Object.entries(hw.cpu.isa).filter(([, v]) => v).map(([k]) => k.toUpperCase().replace('_', '-')).join(' · ') || 'geen SIMD';
+    let h = '';
+    for (const g of hw.gpus)
+      h += `<span class="badge"><span class="k">GPU</span><b>${esc(g.name)}</b> • ${g.vram_total_gib.toFixed(1)} GB VRAM` +
+           `${g.vram_free_known ? ' (' + g.vram_free_gib.toFixed(1) + ' vrij)' : ''}${g.cuda_cc ? ' • CUDA ' + esc(g.cuda_cc) : ''}</span>`;
+    h += `<span class="badge"><span class="k">CPU</span><b>${esc(hw.cpu.brand)}</b> • ${esc(hw.cpu.cores_physical)}C/${esc(hw.cpu.cores_logical)}T • ${esc(isa)}</span>`;
+    h += `<span class="badge"><span class="k">RAM</span><b>${hw.ram.total_gib.toFixed(1)} GB</b> • ${hw.ram.free_gib.toFixed(1)} GB vrij</span>`;
+    h += `<span class="badge"><span class="k">Backend</span><b>${esc(hw.backends.cpu.toUpperCase())}</b>${hw.backends.cuda_built ? ' + CUDA' : ' (CUDA niet in deze build)'}</span>`;
+    $('hw').innerHTML = h;
+  } catch (e) { $('hw').innerHTML = '<span class="badge err">Hardware-detectie mislukt: ' + esc(e.message) + '</span>'; }
+}
+
+// ---------------- catalog
+async function loadCatalog() {
+  let cat;
+  try { cat = await api('/api/catalog'); } catch (e) { $('models').innerHTML = '<div class="err">' + esc(e.message) + '</div>'; return; }
+  $('mdir').textContent = cat.models_dir;
+  $('refnote').textContent = 'tok/s: ' + cat.reference;
+  const busy = status && status.loading;
+  $('models').innerHTML = cat.models.map(m => {
+    const action = m.loaded ? `<button class="btn ghost" data-chat>Chatten</button>`
+      : m.local ? `<button class="btn" data-load="${esc(m.file)}" ${busy || m.status === 'TOO LARGE' ? 'disabled' : ''}>Laden</button>`
+      : m.download_url ? `<button class="btn ghost" data-dl="${esc(m.id)}">Downloaden · ${m.size_gib.toFixed(1)} GB</button>`
+      : `<button class="btn ghost" disabled title="Deze .vlt is nog niet gepubliceerd">Niet gepubliceerd</button>`;
+    return `<div class="card">
+      <div class="row" style="justify-content:space-between"><h3>${esc(m.name)}</h3><span class="pill ${esc(m.color)}">${esc(m.status)}</span></div>
+      <div class="small muted">${esc(m.reason)}</div>
+      <div class="row" style="align-items:baseline;gap:6px"><span class="tps">${m.ref_tps.toFixed(1)}</span><span class="small muted">tok/s ${m.ref_tps_kind === 'measured' ? 'gemeten' : 'geschat'} (referentie-CPU)</span></div>
+      <div class="kv"><span>Parameters</span><span>${esc(m.params)}</span><span>Kwantisatie</span><span>${esc(m.quant)}</span>
+        <span>Bestand</span><span>${esc(m.file)} · ${m.size_gib.toFixed(2)} GiB</span>
+        <span>Nodig</span><span>RAM ${m.ram_needed_gib.toFixed(1)} GiB · of VRAM ${m.vram_needed_gib.toFixed(1)} GiB</span>
+        <span>Bron</span><span><a href="${esc(m.source_url)}" target="_blank" rel="noopener">${esc(m.hf_source)}</a></span></div>
+      ${m.notes ? `<div class="small muted">${esc(m.notes)}</div>` : ''}
+      <div class="row" style="margin-top:auto">${action}</div>
+    </div>`;
+  }).join('');
+  const extra = cat.local.filter(l => !l.in_catalog);
+  $('local').innerHTML = cat.local.length ? cat.local.map(l =>
+    `<span class="badge"><b>${esc(l.file)}</b> ${l.size_gib.toFixed(1)} GiB <span class="pill ${esc(l.color)}">${esc(l.status)}</span>` +
+    (l.loaded ? '' : ` <button class="btn ghost" style="padding:3px 10px" data-load="${esc(l.file)}" ${busy ? 'disabled' : ''}>Laden</button>`) + `</span>`).join('')
+    : '<span class="small muted">Nog geen .vlt-bestanden in deze map.</span>';
+  void extra;
+}
+document.addEventListener('click', async e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.chat !== undefined) show('chat');
+  if (t.dataset.load) loadModel({ file: t.dataset.load });
+  if (t.dataset.dl) startDownload(t.dataset.dl);
+});
+$('pathform').onsubmit = e => { e.preventDefault(); const p = $('pathin').value.trim(); if (p) loadModel({ path: p }); };
+
+async function loadModel(body) {
+  $('loadmsg').textContent = 'Laden gestart…';
+  try { await api('/api/models/load', body); } catch (e) { $('loadmsg').innerHTML = '<span class="err">' + esc(e.message) + '</span>'; return; }
+  await loadCatalog();
+  const t0 = Date.now();
+  for (;;) {
+    await new Promise(r => setTimeout(r, 800));
+    const s = await refreshStatus();
+    if (s && !s.loading) {
+      $('loadmsg').innerHTML = s.load_error ? '<span class="err">' + esc(s.load_error) + '</span>'
+        : `Geladen in ${((Date.now() - t0) / 1000).toFixed(1)} s: <b>${esc(s.model)}</b> op ${esc(s.device)}.`;
+      break;
+    }
+  }
+  loadCatalog(); loadHardware();
+}
+
+let dlTimer = null;
+async function startDownload(id) {
+  try { await api('/api/models/download', { id }); } catch (e) { alert(e.message); return; }
+  pollDownload();
+}
+async function pollDownload() {
+  clearTimeout(dlTimer);
+  let d; try { d = await api('/api/models/download/status'); } catch (_) { return; }
+  if (d.state === 'idle') return;
+  $('dlpanel').style.display = '';
+  $('dltitle').textContent = 'Download ' + d.file;
+  const gb = x => (x / 1073741824).toFixed(2);
+  $('dlbar').style.width = (d.percent ?? 0) + '%';
+  $('dltext').textContent = d.state === 'error' ? 'mislukt: ' + d.error
+    : d.state === 'done' ? 'klaar' : `${d.percent != null ? d.percent.toFixed(1) + '% · ' : ''}${gb(d.bytes_done)}${d.bytes_total ? ' / ' + gb(d.bytes_total) : ''} GB · ${d.mb_per_s} MB/s`;
+  if (d.state === 'running') dlTimer = setTimeout(pollDownload, 1000); else loadCatalog();
+}
+
+// ---------------- chat
+const hist = [];
+const log = $('log');
+function add(cls, text) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+$('clear').onclick = e => { e.preventDefault(); hist.length = 0; log.innerHTML = '<div class="muted small" id="chathint"></div>'; refreshStatus(); };
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('askf').requestSubmit(); } });
+$('askf').onsubmit = async e => {
+  e.preventDefault();
+  const text = $('q').value.trim(); if (!text) return;
+  $('q').value = ''; $('go').disabled = true;
+  hist.push({ role:'user', content:text });
+  add('user', text);
+  const out = add('bot', '…');
+  const t0 = performance.now();
+  try {
+    const j = await api('/v1/chat/completions', { messages:hist, temperature:0, max_tokens:512, stream:false });
+    const msg = j.choices[0].message.content || '';
+    hist.push({ role:'assistant', content:msg });
+    out.textContent = msg;
+    const t = j.timings || {}, n = (j.usage && j.usage.completion_tokens) || 0;
+    const dev = status && status.device ? status.device : (t.isa ? 'CPU ' + t.isa.toUpperCase() : '');
+    const meta = document.createElement('div'); meta.className = 'meta';
+    meta.textContent = `${n} tokens · ${t.tokens_per_second ? t.tokens_per_second.toFixed(1) + ' tok/s' : ''}` +
+      `${t.prefill_s != null ? ' · TTFT ' + t.prefill_s.toFixed(2) + ' s' : ''} · ${dev} · totaal ${((performance.now() - t0) / 1000).toFixed(1)} s`;
+    out.appendChild(meta);
+  } catch (err) { out.className = 'msg err'; out.textContent = 'Fout: ' + err.message; hist.pop(); }
+  $('go').disabled = false; $('q').focus();
+};
+
+// ---------------- start
+(async () => {
+  await refreshStatus();
+  await Promise.all([loadHardware(), loadCatalog()]);
+  pollDownload();
+  setInterval(refreshStatus, 5000);
+})();
+</script>
+</body>
+</html>

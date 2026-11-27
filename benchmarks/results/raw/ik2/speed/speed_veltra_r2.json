@@ -1,0 +1,64 @@
+{
+  "label": "veltra_r2",
+  "model": "hf30",
+  "reps": 3,
+  "max_tokens": 128,
+  "load_start": 7.4326171875,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 63,
+      "completion_tokens": 128,
+      "decode_tok_s": 18.16,
+      "pp_tok_s": 86.55,
+      "prefill_s": 0.65,
+      "wall_s": 7.64,
+      "decode_all": [
+        17.59,
+        19.91,
+        18.16
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx500": {
+      "prompt_tokens": 524,
+      "completion_tokens": 128,
+      "decode_tok_s": 18.8,
+      "pp_tok_s": 97.04,
+      "prefill_s": 5.32,
+      "wall_s": 12.16,
+      "decode_all": [
+        18.89,
+        18.56,
+        18.8
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx2000": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 128,
+      "decode_tok_s": 17.17,
+      "pp_tok_s": 88.45,
+      "prefill_s": 23.67,
+      "wall_s": 31.25,
+      "decode_all": [
+        17.17,
+        17.17,
+        16.61
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    }
+  },
+  "load_end": 13.34619140625
+}

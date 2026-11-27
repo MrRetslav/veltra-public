@@ -1,0 +1,52 @@
+[
+  {
+    "id": "nl1",
+    "prompt": "Wat is de hoofdstad van Australië? Antwoord met alleen de naam van de stad.",
+    "check": {"type": "contains_all", "values": ["Canberra"], "ignore_case": true}
+  },
+  {
+    "id": "nl2",
+    "prompt": "Hoeveel is 12 keer 13? Geef alleen het getal.",
+    "check": {"type": "regex", "pattern": "(?<!\\d)156(?!\\d)"}
+  },
+  {
+    "id": "nl3",
+    "prompt": "Zet deze zin in het Nederlands: 'The cat is sleeping on the table.'",
+    "check": {"type": "contains_all", "values": ["kat", "tafel"], "ignore_case": true}
+  },
+  {
+    "id": "code1",
+    "prompt": "Schrijf een Python-functie is_even(n) die True teruggeeft als n even is, en anders False. Geef alleen de code.",
+    "check": {"type": "contains_all", "values": ["def", "is_even", "%"]}
+  },
+  {
+    "id": "code2",
+    "prompt": "Schrijf een Python-functie max_of_two(a, b) die het grootste van twee getallen teruggeeft. Geef alleen de code, zonder uitleg.",
+    "check": {"type": "regex", "pattern": "def\\s+max_of_two\\s*\\([^)]*\\)\\s*:[\\s\\S]*return"}
+  },
+  {
+    "id": "logic1",
+    "prompt": "Alle mensen zijn sterfelijk. Socrates is een mens. Is Socrates sterfelijk? Antwoord met ja of nee.",
+    "check": {"type": "regex", "pattern": "(?i)^\\W*ja\\b"}
+  },
+  {
+    "id": "logic2",
+    "prompt": "Anna is ouder dan Bas. Bas is ouder dan Cees. Cees is ouder dan Dirk. Wie is de jongste? Antwoord alleen met de naam.",
+    "check": {"type": "regex", "pattern": "(?i)^\\W*dirk\\b"}
+  },
+  {
+    "id": "json1",
+    "prompt": "Geef alleen een JSON-object voor een fictief persoon, met de sleutels naam, leeftijd en stad. Geen uitleg.",
+    "check": {"type": "json_keys", "keys": ["naam", "leeftijd", "stad"]}
+  },
+  {
+    "id": "json2",
+    "prompt": "Geef alleen een JSON-object voor een fictief boek, met de sleutels titel, auteur en jaar. Geen uitleg.",
+    "check": {"type": "json_keys", "keys": ["titel", "auteur", "jaar"]}
+  },
+  {
+    "id": "json3",
+    "prompt": "Geef alleen een JSON-object voor een fictief product, met de sleutels product, prijs_eur en op_voorraad. Geen uitleg.",
+    "check": {"type": "json_keys", "keys": ["product", "prijs_eur", "op_voorraad"]}
+  }
+]

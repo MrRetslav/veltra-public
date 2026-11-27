@@ -1,0 +1,53 @@
+{
+  "label": "paretomax2",
+  "model": "hf30",
+  "rounds": 2,
+  "reps": 6,
+  "max_tokens": 128,
+  "load_start": 13.75,
+  "load_end": 13.298828125,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 63,
+      "completion_tokens": 128,
+      "decode_tok_s": 25.64,
+      "decode_all": [
+        25.59,
+        26.28,
+        25.69,
+        25.55,
+        25.48,
+        25.87
+      ],
+      "pp_tok_s": 105.0
+    },
+    "ctx500": {
+      "prompt_tokens": 524,
+      "completion_tokens": 128,
+      "decode_tok_s": 24.72,
+      "decode_all": [
+        24.8,
+        24.64,
+        25.18,
+        24.64,
+        25.13,
+        24.33
+      ],
+      "pp_tok_s": 126.8
+    },
+    "ctx2000": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 128,
+      "decode_tok_s": 21.97,
+      "decode_all": [
+        22.36,
+        20.9,
+        22.18,
+        21.39,
+        21.76,
+        22.51
+      ],
+      "pp_tok_s": 111.2
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "load_start": 13.5185546875,
+  "membw": [
+    {
+      "config": "unpinned-1t-seq",
+      "threads": 1,
+      "gb_s_median": 22.23,
+      "gb_s_min": 21.86,
+      "gb_s_max": 23.64,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-2t-seq",
+      "threads": 2,
+      "gb_s_median": 31.84,
+      "gb_s_min": 31.6,
+      "gb_s_max": 34.49,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-4t-seq",
+      "threads": 4,
+      "gb_s_median": 32.58,
+      "gb_s_min": 31.58,
+      "gb_s_max": 35.95,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-6t-seq",
+      "threads": 6,
+      "gb_s_median": 32.62,
+      "gb_s_min": 31.29,
+      "gb_s_max": 34.99,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-seq",
+      "threads": 8,
+      "gb_s_median": 32.98,
+      "gb_s_min": 31.76,
+      "gb_s_max": 35.25,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-expert",
+      "threads": 8,
+      "gb_s_median": 32.9,
+      "gb_s_min": 31.77,
+      "gb_s_max": 34.71,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "pin-4+4-ccd-expert",
+      "threads": 8,
+      "gb_s_median": 33.45,
+      "gb_s_min": 33.27,
+      "gb_s_max": 35.63,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "pin-2x4-ccx-expert",
+      "threads": 8,
+      "gb_s_median": 33.11,
+      "gb_s_min": 31.73,
+      "gb_s_max": 34.6,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "pin-one-ccd-smt-expert",
+      "threads": 8,
+      "gb_s_median": 31.89,
+      "gb_s_min": 31.67,
+      "gb_s_max": 33.26,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "pin-2x4-ccx-seq",
+      "threads": 8,
+      "gb_s_median": 32.59,
+      "gb_s_min": 32.02,
+      "gb_s_max": 34.62,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-expert-pf2",
+      "threads": 8,
+      "gb_s_median": 33.05,
+      "gb_s_min": 32.38,
+      "gb_s_max": 34.35,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-expert-pf4",
+      "threads": 8,
+      "gb_s_median": 32.47,
+      "gb_s_min": 32.33,
+      "gb_s_max": 34.34,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-expert-pf8",
+      "threads": 8,
+      "gb_s_median": 32.63,
+      "gb_s_min": 32.45,
+      "gb_s_max": 33.21,
+      "buffer_gb": 2.0,
+      "reps": 5
+    },
+    {
+      "config": "unpinned-8t-expert-pf16",
+      "threads": 8,
+      "gb_s_median": 32.51,
+      "gb_s_min": 32.07,
+      "gb_s_max": 33.56,
+      "buffer_gb": 2.0,
+      "reps": 5
+    }
+  ],
+  "engine": {
+    "unpinned": {
+      "decode_tok_s": 21.06,
+      "decode_all": [
+        21.06,
+        21.26,
+        20.47
+      ],
+      "prefill_tok_s": 94.5,
+      "generated": 96
+    },
+    "pin-4+4-ccd": {
+      "decode_tok_s": 20.55,
+      "decode_all": [
+        20.55,
+        21.0,
+        20.52
+      ],
+      "prefill_tok_s": 89.9,
+      "generated": 96
+    },
+    "pin-2x4-ccx": {
+      "decode_tok_s": 20.66,
+      "decode_all": [
+        20.49,
+        20.76,
+        20.66
+      ],
+      "prefill_tok_s": 86.4,
+      "generated": 96
+    }
+  },
+  "bytes_per_token_note": "engine GB/s = tok/s x about 1.24 GB per token (screened head)",
+  "load_end": 12.71630859375
+}

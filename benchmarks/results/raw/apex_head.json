@@ -1,0 +1,43 @@
+{
+  "model": "q30b-qk-best.vlt",
+  "reps": 3,
+  "load": 13.3876953125,
+  "configs": {
+    "unscreened": {
+      "decode_tok_s": 19.52,
+      "decode_all": [
+        19.27,
+        19.52,
+        20.52
+      ],
+      "generated_tokens": 128,
+      "head_ms_per_token": 9.62,
+      "token_ms_while_profiling": 51.31,
+      "head_share_pct": 18.8
+    },
+    "screen4": {
+      "decode_tok_s": 21.5,
+      "decode_all": [
+        21.17,
+        21.5,
+        21.97
+      ],
+      "generated_tokens": 128,
+      "head_ms_per_token": 5.24,
+      "token_ms_while_profiling": 46.09,
+      "head_share_pct": 11.4
+    },
+    "screen2": {
+      "decode_tok_s": 22.3,
+      "decode_all": [
+        22.3,
+        22.77,
+        22.0
+      ],
+      "generated_tokens": 128,
+      "head_ms_per_token": 3.38,
+      "token_ms_while_profiling": 44.61,
+      "head_share_pct": 7.6
+    }
+  }
+}

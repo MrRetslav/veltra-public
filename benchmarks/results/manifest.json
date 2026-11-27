@@ -1,0 +1,33 @@
+{
+  "hardware": "AMD Ryzen 9 3900 (Zen 2, 12 cores), DDR4, Ubuntu 24.04, CPU only, 8 threads; shared machine, load average about 8-14 from other work",
+  "versions": {
+    "veltra": "0.1.0",
+    "llama.cpp": "commit c212d25, built with GCC 13.3, GGML_NATIVE",
+    "ik_llama.cpp": "commit ff9b96b0, built with GCC 13.3, GGML_NATIVE"
+  },
+  "eval_set": {
+    "file": "benchmarks/eval_public/tasks.jsonl",
+    "sha256": "aac1c4cf52f3d97052f3e4999ad8c0811a4279781c60f8cf976d54492dd4f473",
+    "tasks": 160
+  },
+  "entries": [
+    {"id": "veltra", "short": "Veltra default", "engine": "veltra", "style": "veltra", "groups": ["battle", "sweep"], "eval": "hf30_base", "speed": "veltra", "speed_rss": "speed_veltra", "eval_rss": "base", "file_bytes": 11961560576, "binary_bytes": 2946088, "flags": ""},
+    {"id": "veltra-pm", "short": "Veltra --pareto-max", "engine": "veltra", "style": "veltra-pm", "groups": ["battle", "sweep"], "eval": "hf30_pmax6s2", "speed": "paretomax2", "speed_rss": "speed_paretomax2", "eval_rss": "pmax6s2", "file_bytes": 11961560576, "binary_bytes": 2946088, "flags": "--moe-k 6 --screen-head 2 --prefill-chunk 512 --lookup-n 8"},
+    {"id": "llamacpp", "short": "llama.cpp", "engine": "llama.cpp", "groups": ["battle", "sweep"], "eval": "llama", "speed": "llamacpp", "speed_rss": "speed_llamacpp", "eval_rss": "llama", "file_bytes": 11787538848, "binary_bytes": 26387768, "flags": "-t 8 -c 4096 -ngl 0 --jinja -np 1"},
+    {"id": "ikllama", "short": "ik_llama.cpp", "engine": "ik_llama.cpp", "groups": ["battle", "sweep"], "eval": "ik", "speed": "ikllama", "speed_rss": "speed_ikllama", "eval_rss": "ik", "file_bytes": 11787538848, "binary_bytes": 57583824, "flags": "-t 8 -c 4096 -ngl 0 --jinja -np 1"},
+    {"id": "ikllama-rtr", "short": "ik_llama.cpp -rtr", "engine": "ik_llama.cpp", "groups": ["battle"], "speed": "ikllama_rtr", "speed_rss": "speed_ikllama_rtr", "file_bytes": 11787538848, "binary_bytes": 57583824, "flags": "-t 8 -c 4096 -ngl 0 --jinja -np 1 -rtr"},
+    {"id": "qwen17", "short": "Veltra, Qwen3-1.7B", "engine": "veltra", "style": "veltra-small", "groups": ["sweep"], "eval": "qwen17", "speed": "qwen17", "speed_rss": "speed_qwen17", "eval_rss": "qwen17", "file_bytes": 1138195392, "binary_bytes": 2946088, "flags": "a different, much smaller model"},
+    {"id": "veltra-moek6", "short": "--moe-k 6", "engine": "veltra", "groups": ["sweep"], "eval": "hf30_moek6", "eval_rss": "moek6", "flags": "--moe-k 6"},
+    {"id": "veltra-moek5", "short": "--moe-k 5", "engine": "veltra", "groups": ["sweep"], "eval": "hf30_moek5", "eval_rss": "moek5", "flags": "--moe-k 5"},
+    {"id": "veltra-pm-screen4", "short": "preset with 4-bit screen", "engine": "veltra", "style": "veltra-pm", "groups": ["sweep"], "eval": "hf30_pmax6", "speed": "paretomax", "speed_rss": "speed_paretomax", "eval_rss": "pmax6", "flags": "--moe-k 6 --screen-head 1 --prefill-chunk 512 --lookup-n 8"},
+    {"id": "veltra-lookup4", "short": "--lookup-n 4", "engine": "veltra", "groups": ["sweep"], "eval": "hf30_lookup4", "eval_rss": "lookup4", "same_output_as": "hf30_base", "flags": "--lookup-n 4"},
+    {"id": "q36-base", "short": "Veltra, Qwen3.6-35B-A3B", "engine": "veltra", "groups": ["sweep"], "eval": "q36_base", "eval_rss": "q36_base", "flags": ""},
+    {"id": "q36-mtp-k6", "short": "Qwen3.6 --mtp --moe-k 6", "engine": "veltra", "groups": ["sweep"], "eval": "q36_mtp_k6", "eval_rss": "q36_mtp_k6", "flags": "--mtp --moe-k 6"}
+  ],
+  "not_run": [
+    "A 2.5-bit LUT kernel and the .vlt v2 layout were not built",
+    "No GPU measurements",
+    "Shadow experts: no 160-task run and no speed (offline gate not passed, docs/LBT50_LOG.md)",
+    "No second machine; no run on an idle machine"
+  ]
+}

@@ -1,0 +1,41 @@
+# model artefacts
+*.lbt
+*.vlt
+*.safetensors
+*.bin
+*.pt
+*.gguf
+*.npz
+*.npy
+# build output
+build/
+cmake-build-*/
+*.exe
+*.o
+*.obj
+*.pdb
+*.a
+*.lib
+*.so
+*.dll
+*.dll.a
+*.exp
+# python
+__pycache__/
+.venv/
+venv/
+*.pyc
+.pytest_cache/
+# android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+x_*.json
+# release packages and raw benchmark runs
+dist/
+build-win/
+benchmarks/results/raw/*.log
+benchmarks/results/raw/*.data/

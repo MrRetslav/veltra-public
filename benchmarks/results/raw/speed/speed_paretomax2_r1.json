@@ -1,0 +1,64 @@
+{
+  "label": "paretomax2_r1",
+  "model": "hf30",
+  "reps": 3,
+  "max_tokens": 128,
+  "load_start": 13.75,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 63,
+      "completion_tokens": 128,
+      "decode_tok_s": 25.69,
+      "pp_tok_s": 109.1,
+      "prefill_s": 0.54,
+      "wall_s": 5.52,
+      "decode_all": [
+        25.59,
+        26.28,
+        25.69
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx500": {
+      "prompt_tokens": 524,
+      "completion_tokens": 128,
+      "decode_tok_s": 24.8,
+      "pp_tok_s": 131.3,
+      "prefill_s": 3.93,
+      "wall_s": 9.05,
+      "decode_all": [
+        24.8,
+        24.64,
+        25.18
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx2000": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 128,
+      "decode_tok_s": 22.18,
+      "pp_tok_s": 111.7,
+      "prefill_s": 18.64,
+      "wall_s": 24.41,
+      "decode_all": [
+        22.36,
+        20.9,
+        22.18
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    }
+  },
+  "load_end": 13.32958984375
+}

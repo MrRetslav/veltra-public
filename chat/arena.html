@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veltra Arena — Veltra vs llama.cpp</title>
+<style>
+  :root { --bg:#09090B; --card:#111114; --line:#27272A; --text:#FAFAFA; --muted:#A1A1AA; --a:#60A5FA; --b:#F59E0B; --err:#F87171; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  header { padding:16px; border-bottom:1px solid var(--line); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  h1 { font-size:17px; margin:0; font-weight:600; }
+  .muted { color:var(--muted); font-size:13px; }
+  .pill { border:1px solid var(--line); border-radius:999px; padding:4px 12px; background:transparent; color:var(--text); cursor:pointer; font-size:13px; }
+  .pill.on { background:#FAFAFA; color:#09090B; }
+  main { max-width:1200px; margin:0 auto; padding:16px; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:760px) { .cols { grid-template-columns:1fr; } }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; min-height:180px; display:flex; flex-direction:column; }
+  .card h2 { font-size:14px; margin:0 0 8px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:6px; }
+  .log { flex:1; overflow-y:auto; max-height:55vh; }
+  .msg { margin:8px 0; white-space:pre-wrap; word-wrap:break-word; }
+  .msg.user { color:var(--muted); }
+  .stats { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .err { color:var(--err); }
+  form { display:flex; gap:8px; margin-top:12px; }
+  textarea { flex:1; background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:10px; padding:10px; font:inherit; resize:vertical; min-height:48px; }
+  button.send { background:#FAFAFA; color:#09090B; border:0; border-radius:10px; padding:0 18px; font-weight:600; cursor:pointer; }
+  button.send:disabled { opacity:.5; cursor:default; }
+  nav a { color:inherit; }
+  input.url { background:var(--card); color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:2px 6px; font-size:12px; width:200px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Veltra Arena</h1>
+  <nav class="muted"><a href="#" id="benchLink">Benchmarks</a> · <a href="#" id="chatLink">Chat</a></nav>
+  <span class="muted">Zelfde vraag, na elkaar beantwoord op dezelfde CPU (Ryzen 9 3900), temp 0</span>
+  <span style="flex:1"></span>
+  <button class="pill on" data-e="A">Veltra</button>
+  <button class="pill on" data-e="B">llama.cpp</button>
+  <button class="pill" id="clear">Wissen</button>
+</header>
+<main>
+  <div class="cols">
+    <section class="card" id="cardA">
+      <h2><span><span class="dot" style="background:var(--a)"></span>Veltra (q30b_qk_best)</span><input class="url" id="urlA"></h2>
+      <div class="log" id="logA"></div>
+    </section>
+    <section class="card" id="cardB">
+      <h2><span><span class="dot" style="background:var(--b)"></span>llama.cpp (UD-Q2_K_XL)</span><input class="url" id="urlB"></h2>
+      <div class="log" id="logB"></div>
+    </section>
+  </div>
+  <form id="f">
+    <textarea id="q" placeholder="Stel een vraag aan beide engines… (Enter = versturen, Shift+Enter = nieuwe regel)"></textarea>
+    <button class="send" id="go">Vraag</button>
+  </form>
+  <p class="muted">Engines antwoorden na elkaar (niet tegelijk), zodat ze de geheugenbus niet delen en de snelheden eerlijk zijn.</p>
+</main>
+<script>
+const qs = new URLSearchParams(location.search);
+const urlA = document.getElementById('urlA'), urlB = document.getElementById('urlB');
+// An engine address must be this server or a server on this computer: a crafted link can never send a question (or
+// anything else) elsewhere. This page never uses the desktop token.
+function safeBase(u) {
+  try {
+    const x = new URL(u, location.href), web = x.protocol === 'http:' || x.protocol === 'https:';
+    const near = ['127.0.0.1', 'localhost', '[::1]'].includes(x.hostname) || (location.protocol.startsWith('http') && x.origin === location.origin);
+    return web && near && !x.username && !x.password ? x.origin + x.pathname.replace(/\/+$/, '') : '';
+  } catch { return ''; }
+}
+urlA.value = safeBase(qs.get('veltra') || '') || (location.protocol.startsWith('http') ? location.origin : 'http://127.0.0.1:18099');
+// llama.cpp: ?llama=<base url> overrides; served over http the same-origin proxy of veltra-server
+// (POST /compare/llama/v1/chat/completions, needs --compare-upstream) is used, so no second tunnel is needed.
+const served = location.protocol.startsWith('http');
+urlB.value = safeBase(qs.get('llama') || '') || (served ? location.origin + '/compare/llama' : 'http://127.0.0.1:18098');
+document.getElementById('benchLink').href = served ? '/benchmarks' : 'benchmarks.html';
+document.getElementById('chatLink').href = served ? '/chat' : 'chat.html';
+const on = { A: true, B: true };
+const hist = { A: [], B: [] };
+document.querySelectorAll('.pill[data-e]').forEach(b => b.onclick = () => { on[b.dataset.e] = !on[b.dataset.e]; b.classList.toggle('on', on[b.dataset.e]); });
+document.getElementById('clear').onclick = () => { hist.A = []; hist.B = []; logA.innerHTML = ''; logB.innerHTML = ''; };
+const logA = document.getElementById('logA'), logB = document.getElementById('logB');
+function add(log, cls, text) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+async function ask(key, base, model, log, text) {
+  hist[key].push({ role: 'user', content: text });
+  add(log, 'user', '› ' + text);
+  const out = add(log, '', '…');
+  const t0 = performance.now();
+  try {
+    const target = safeBase(base);
+    if (!target) throw new Error('alleen deze server of een adres op deze computer (127.0.0.1) is toegestaan');
+    const r = await fetch(target + '/v1/chat/completions', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model, messages: hist[key], temperature: 0, max_tokens: 400, stream: false })
+    });
+    const j = await r.json();
+    if (!r.ok || !j.choices) throw new Error((j.error && j.error.message) || ('HTTP ' + r.status));
+    const wall = (performance.now() - t0) / 1000;
+    const msg = j.choices[0].message.content || '';
+    hist[key].push({ role: 'assistant', content: msg });
+    out.textContent = msg;
+    const n = (j.usage && j.usage.completion_tokens) || 0, t = j.timings || {};
+    let dec = t.tokens_per_second || t.predicted_per_second, ttft = t.prefill_s != null ? t.prefill_s : (t.prompt_ms != null ? t.prompt_ms / 1000 : null);
+    const s = add(log, 'stats', '');
+    s.textContent = `${n} tokens · ${dec ? dec.toFixed(1) + ' tok/s decode' : ''}${ttft != null ? ' · TTFT ' + ttft.toFixed(2) + ' s' : ''} · totaal ${wall.toFixed(1)} s`;
+  } catch (e) { out.className = 'msg err'; out.textContent = 'Fout: ' + e.message + ' (draait de server/tunnel? llama.cpp via /compare/llama vraagt veltra-server --compare-upstream)'; hist[key].pop(); }
+}
+const f = document.getElementById('f'), q = document.getElementById('q'), go = document.getElementById('go');
+q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); f.requestSubmit(); } });
+f.onsubmit = async e => {
+  e.preventDefault();
+  const text = q.value.trim(); if (!text) return;
+  q.value = ''; go.disabled = true;
+  if (on.A) await ask('A', urlA.value, 'hf30', logA, text);
+  if (on.B) await ask('B', urlB.value, 'llama', logB, text);
+  go.disabled = false; q.focus();
+};
+</script>
+</body>
+</html>

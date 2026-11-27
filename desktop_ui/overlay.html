@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Veltra snelstart</title>
+<link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:#09090B;color:#EDEDF2;font:14px/1.55 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.10)}
+.head{display:flex;align-items:center;gap:8px;padding:8px 14px 0;font-size:11px;color:#8B8B97;user-select:none;-webkit-app-region:drag;app-region:drag}
+.head strong{color:#C9CBE6;font-weight:600}
+.dot{width:6px;height:6px;border-radius:50%;background:#71717A}
+.dot.on{background:#34D399}
+.head .sp{flex:1}
+.ask{display:flex;align-items:flex-end;gap:8px;padding:8px 10px 10px}
+textarea{flex:1;resize:none;max-height:116px;background:#121216;border:1px solid rgba(255,255,255,.10);border-radius:14px;color:inherit;font:inherit;padding:10px 14px;outline:none}
+textarea:focus{border-color:#4351E4;box-shadow:0 0 0 3px rgba(67,81,228,.28)}
+button{font:inherit;font-size:12px;font-weight:600;height:34px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:#1A1A20;color:#EDEDF2;cursor:pointer;transition:transform .12s cubic-bezier(.16,1,.3,1)}
+button:active{transform:scale(.97)}
+button.go{background:#4351E4;border-color:transparent;height:42px}
+button.go.stop{background:#B91C1C}
+#answer{flex:1;min-height:0;overflow-y:auto;padding:4px 18px 10px;white-space:pre-wrap;overflow-wrap:anywhere;border-top:1px solid rgba(255,255,255,.07)}
+#answer.err{color:#FCA5A5}
+.foot{display:flex;align-items:center;gap:8px;padding:8px 12px 10px;border-top:1px solid rgba(255,255,255,.07);font-size:11px;color:#8B8B97;font-variant-numeric:tabular-nums}
+.foot .sp{flex:1}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="head"><span class="dot" id="dot"></span><strong>Veltra</strong><span id="model">verbinden…</span><span class="sp"></span><span>Esc sluit</span></div>
+<div class="ask">
+  <textarea id="q" rows="1" placeholder="Stel een vraag aan je lokale model…" aria-label="Vraag"></textarea>
+  <button type="button" class="go" id="go">Vraag</button>
+</div>
+<div id="answer" hidden aria-live="polite"></div>
+<div class="foot" id="foot" hidden><span id="stats"></span><span class="sp"></span><button type="button" id="openMain" hidden>Open in Veltra</button></div>
+<script>
+(function(){
+'use strict';
+var TOKEN=window.__VELTRA_TOKEN||'';
+var $=function(id){return document.getElementById(id);};
+var q=$('q'),go=$('go'),out=$('answer'),foot=$('foot'),stats=$('stats'),openBtn=$('openMain');
+var ctrl=null,chatId=null,last=null,height=96;
+function host(m){if(window.chrome&&window.chrome.webview)window.chrome.webview.postMessage(Object.assign({type:'overlay'},m));}
+function headers(h){h=h||{};if(TOKEN)h['X-Veltra-Token']=TOKEN;return h;}
+function fit(){
+var want=out.hidden?96+Math.max(0,q.offsetHeight-42):Math.min(540,Math.max(240,150+q.offsetHeight+out.scrollHeight));
+if(want!==height){height=want;host({action:'resize',height:want});}
+}
+function grow(){q.style.height='auto';q.style.height=Math.min(116,q.scrollHeight+2)+'px';fit();}
+function status(){
+fetch('/api/status',{headers:headers()}).then(function(r){return r.json();}).then(function(s){
+$('dot').className='dot'+(s.loaded?' on':'');
+$('model').textContent=s.loaded?s.model:(s.loading?'model wordt geladen…':(s.parked_file?s.parked_file+' (wordt bij je vraag geladen)':'geen model geladen'));
+}).catch(function(){$('model').textContent='engine niet bereikbaar';});
+}
+function setBusy(b){go.textContent=b?'Stop':'Vraag';go.classList.toggle('stop',b);}
+function send(){
+var text=q.value.trim();
+if(!text||ctrl)return;
+ctrl=new AbortController();setBusy(true);
+out.hidden=false;out.className='';out.textContent='';foot.hidden=false;openBtn.hidden=true;stats.textContent='bezig…';chatId=null;
+var answer='',n=0,t0=performance.now(),first=0,raf=0,buf='',timings=null;
+function paint(){raf=0;var stick=out.scrollHeight-out.scrollTop-out.clientHeight<40;out.textContent=answer;fit();if(stick)out.scrollTop=out.scrollHeight;}
+function line(l){
+if(l.indexOf('data:')!==0)return;
+var d=l.slice(5).trim();if(!d||d==='[DONE]')return;
+var j;try{j=JSON.parse(d);}catch(e){return;}
+if(j.error)throw new Error(j.error.message||'fout');
+var p=j.choices&&j.choices[0]&&j.choices[0].delta&&j.choices[0].delta.content;
+if(p){if(!first)first=performance.now();answer+=p;n++;if(!raf)raf=requestAnimationFrame(paint);}
+if(j.timings)timings=j.timings;
+}
+fetch('/v1/chat/completions',{method:'POST',headers:headers({'Content-Type':'application/json'}),signal:ctrl.signal,
+body:JSON.stringify({messages:[{role:'user',content:text}],stream:true,max_tokens:512,temperature:0})})
+.then(function(res){
+if(!res.ok)return res.json().catch(function(){return null;}).then(function(j){throw new Error((j&&j.error&&j.error.message)||('HTTP '+res.status));});
+var rd=res.body.getReader(),dec=new TextDecoder();
+return (function pump(){return rd.read().then(function(r){
+if(r.done)return;
+buf+=dec.decode(r.value,{stream:true});
+var i;while((i=buf.indexOf('\n'))>=0){line(buf.slice(0,i).replace(/\r$/,''));buf=buf.slice(i+1);}
+return pump();
+});})();
+})
+.catch(function(e){if(!(e&&e.name==='AbortError')){out.className='err';answer=(answer?answer+'\n\n':'')+((e&&e.message)||'Onbekende fout');}})
+.then(function(){
+if(raf)cancelAnimationFrame(raf);
+paint();ctrl=null;setBusy(false);status();
+var tps=timings&&timings.tokens_per_second;
+if(!tps&&first&&n>1)tps=n/((performance.now()-first)/1000);
+stats.textContent=(tps?tps.toFixed(1).replace('.',',')+' tok/s':'')+(first?' · '+((first-t0)/1000).toFixed(1).replace('.',',')+' s tot eerste token':'');
+if(answer&&out.className!=='err'){last={q:text,a:answer};openBtn.hidden=false;fit();}
+});
+}
+function openInApp(){
+if(!last)return;
+if(chatId){host({action:'open_main',chat:chatId});return;}
+openBtn.disabled=true;
+fetch('/api/chats',{method:'POST',headers:headers({'Content-Type':'application/json'}),
+body:JSON.stringify({title:last.q.slice(0,48),messages:[{role:'user',content:last.q},{role:'assistant',content:last.a}]})})
+.then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+.then(function(j){chatId=String(j.id||(j.chat&&j.chat.id)||'');host({action:'open_main',chat:chatId});})
+.catch(function(e){stats.textContent='Opslaan mislukt: '+e.message;})
+.then(function(){openBtn.disabled=false;});
+}
+function dismiss(){if(ctrl)ctrl.abort();host({action:'hide'});}
+go.addEventListener('click',function(){if(ctrl)ctrl.abort();else send();});
+openBtn.addEventListener('click',openInApp);
+q.addEventListener('input',grow);
+q.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();dismiss();}});
+if(window.chrome&&window.chrome.webview)window.chrome.webview.addEventListener('message',function(e){
+if(e.data&&e.data.type==='overlay_shown'){status();q.focus();q.select();height=0;fit();}
+});
+status();q.focus();
+})();
+</script>
+</body>
+</html>

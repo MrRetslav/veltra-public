@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ python3-numpy
+          grep -q avx2 /proc/cpuinfo   # the model-level checks need AVX2
+      - name: Build
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j "$(nproc)" --target veltra-gen veltra-selftest veltra-server
+      - name: Kernel and verifier self-tests
+        run: build/veltra-selftest
+      - name: Synthetic test models
+        run: python3 tests/make_ci_model.py --out build/ci-models
+      - name: forward vs forward_batch, bit-identity, lossless speculation, expert skipping
+        run: bash tests/ci_checks.sh build build/ci-models
+      - name: Eval set is reproducible
+        run: |
+          sha256sum benchmarks/eval_public/tasks.jsonl > /tmp/tasks.sha
+          python3 benchmarks/eval_public/generate.py
+          sha256sum -c /tmp/tasks.sha
+
+  windows-cross:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++-mingw-w64-x86-64-posix binutils-mingw-w64-x86-64
+      - name: Cross-compile veltra.exe
+        run: bash tests/build_win_mingw.sh "$PWD"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: veltra-windows-x64
+          path: build-win/veltra.exe

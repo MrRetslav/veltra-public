@@ -1,0 +1,174 @@
+{
+  "source": "computed by benchmarks/make_charts.py from battle_3way.json and raw/ik2/speed/; percent = (Veltra / other - 1) * 100",
+  "published_medians": {
+    "veltra_vs_llamacpp": {
+      "decode_pct": {
+        "ctx0": 15.0,
+        "ctx500": 19.2,
+        "ctx2000": 45.2
+      },
+      "pp_pct": {
+        "ctx0": 63.8,
+        "ctx500": 46.9,
+        "ctx2000": 54.2
+      }
+    },
+    "veltra_vs_ikllama": {
+      "decode_pct": {
+        "ctx0": 3.7,
+        "ctx500": 5.0,
+        "ctx2000": 12.4
+      },
+      "pp_pct": {
+        "ctx0": 6.4,
+        "ctx500": 0.6,
+        "ctx2000": 5.6
+      }
+    },
+    "veltra_vs_ikllama-rtr": {
+      "decode_pct": {
+        "ctx0": 2.1,
+        "ctx500": 2.4,
+        "ctx2000": 12.7
+      },
+      "pp_pct": {
+        "ctx0": -0.2,
+        "ctx500": 0.1,
+        "ctx2000": 6.7
+      }
+    },
+    "veltra-pm_vs_llamacpp": {
+      "decode_pct": {
+        "ctx0": 51.1,
+        "ctx500": 58.3,
+        "ctx2000": 83.9
+      },
+      "pp_pct": {
+        "ctx0": 85.5,
+        "ctx500": 91.8,
+        "ctx2000": 95.1
+      }
+    },
+    "veltra-pm_vs_ikllama": {
+      "decode_pct": {
+        "ctx0": 36.3,
+        "ctx500": 39.4,
+        "ctx2000": 42.4
+      },
+      "pp_pct": {
+        "ctx0": 20.6,
+        "ctx500": 31.4,
+        "ctx2000": 33.7
+      }
+    },
+    "veltra-pm_vs_ikllama-rtr": {
+      "decode_pct": {
+        "ctx0": 34.2,
+        "ctx500": 36.0,
+        "ctx2000": 42.8
+      },
+      "pp_pct": {
+        "ctx0": 13.0,
+        "ctx500": 30.7,
+        "ctx2000": 35.0
+      }
+    }
+  },
+  "same_session_default": {
+    "medians": {
+      "veltra": {
+        "ctx0": {
+          "decode_tok_s": 19.41,
+          "pp_tok_s": 90.87
+        },
+        "ctx500": {
+          "decode_tok_s": 18.68,
+          "pp_tok_s": 98.27
+        },
+        "ctx2000": {
+          "decode_tok_s": 17.17,
+          "pp_tok_s": 87.44
+        }
+      },
+      "ikllama": {
+        "ctx0": {
+          "decode_tok_s": 18.8,
+          "pp_tok_s": 87.12
+        },
+        "ctx500": {
+          "decode_tok_s": 17.73,
+          "pp_tok_s": 96.47
+        },
+        "ctx2000": {
+          "decode_tok_s": 15.43,
+          "pp_tok_s": 83.16
+        }
+      },
+      "ikllama_rtr": {
+        "ctx0": {
+          "decode_tok_s": 19.1,
+          "pp_tok_s": 92.94
+        },
+        "ctx500": {
+          "decode_tok_s": 18.18,
+          "pp_tok_s": 97.03
+        },
+        "ctx2000": {
+          "decode_tok_s": 15.38,
+          "pp_tok_s": 82.36
+        }
+      }
+    },
+    "veltra_vs_ikllama": {
+      "decode_pct": {
+        "ctx0": 3.2,
+        "ctx500": 5.4,
+        "ctx2000": 11.3
+      },
+      "pp_pct": {
+        "ctx0": 4.3,
+        "ctx500": 1.9,
+        "ctx2000": 5.1
+      }
+    },
+    "veltra_vs_ikllama-rtr": {
+      "decode_pct": {
+        "ctx0": 1.6,
+        "ctx500": 2.8,
+        "ctx2000": 11.6
+      },
+      "pp_pct": {
+        "ctx0": -2.2,
+        "ctx500": 1.3,
+        "ctx2000": 6.2
+      }
+    }
+  },
+  "paired_sign_tests": {
+    "veltra_vs_llamacpp": {
+      "only_first_passed": 2,
+      "only_second_passed": 5,
+      "p": 0.4531
+    },
+    "veltra_vs_ikllama": {
+      "only_first_passed": 3,
+      "only_second_passed": 6,
+      "p": 0.5078
+    },
+    "veltra-pm_vs_llamacpp": {
+      "only_first_passed": 0,
+      "only_second_passed": 8,
+      "p": 0.0078
+    },
+    "veltra-pm_vs_ikllama": {
+      "only_first_passed": 1,
+      "only_second_passed": 9,
+      "p": 0.0215
+    },
+    "veltra-pm_vs_veltra": {
+      "only_first_passed": 1,
+      "only_second_passed": 6,
+      "p": 0.125
+    }
+  }
+}

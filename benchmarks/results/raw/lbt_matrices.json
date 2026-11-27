@@ -1,0 +1,806 @@
+{
+  "layers": {
+    "2": {
+      "quant_output_err": {
+        "2": 0.03804,
+        "3": 0.00687,
+        "4": 0.00149
+      },
+      "shared_basis": {
+        "192": {
+          "err_f32_coeffs": 0.17718,
+          "err_4bit_coeffs": 0.17863,
+          "bytes_ratio_vs_q2k": 0.208
+        },
+        "384": {
+          "err_f32_coeffs": 0.13282,
+          "err_4bit_coeffs": 0.13431,
+          "bytes_ratio_vs_q2k": 0.417
+        },
+        "576": {
+          "err_f32_coeffs": 0.10341,
+          "err_4bit_coeffs": 0.10494,
+          "bytes_ratio_vs_q2k": 0.625
+        },
+        "768": {
+          "err_f32_coeffs": 0.08136,
+          "err_4bit_coeffs": 0.08291,
+          "bytes_ratio_vs_q2k": 0.833
+        },
+        "1152": {
+          "err_f32_coeffs": 0.04847,
+          "err_4bit_coeffs": 0.05012,
+          "bytes_ratio_vs_q2k": 1.25
+        }
+      },
+      "attention_lowrank": {
+        "q": {
+          "quant3_err": 0.00297,
+          "quant4_err": 0.00065,
+          "rank": {
+            "64": {
+              "err": 0.04615,
+              "params_ratio": 0.047
+            },
+            "128": {
+              "err": 0.02827,
+              "params_ratio": 0.094
+            },
+            "256": {
+              "err": 0.01603,
+              "params_ratio": 0.188
+            },
+            "384": {
+              "err": 0.01107,
+              "params_ratio": 0.281
+            },
+            "512": {
+              "err": 0.00827,
+              "params_ratio": 0.375
+            }
+          }
+        },
+        "k": {
+          "quant3_err": 0.00562,
+          "quant4_err": 0.00123,
+          "rank": {
+            "64": {
+              "err": 0.08386,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.03873,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.01047,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.00277,
+              "params_ratio": 0.938
+            }
+          }
+        },
+        "v": {
+          "quant3_err": 0.04108,
+          "quant4_err": 0.00886,
+          "rank": {
+            "64": {
+              "err": 0.43313,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.28509,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.11917,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.0339,
+              "params_ratio": 0.938
+            }
+          }
+        }
+      },
+      "certified_skip": {
+        "natural": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 3915
+          },
+          "0.05": {
+            "certified_share": 0.0011,
+            "true_err_mean": 0.0009,
+            "oracle_share": 0.003,
+            "samples": 3915
+          },
+          "0.1": {
+            "certified_share": 0.0147,
+            "true_err_mean": 0.02169,
+            "oracle_share": 0.037,
+            "samples": 3915
+          },
+          "0.2": {
+            "certified_share": 0.055,
+            "true_err_mean": 0.10001,
+            "oracle_share": 0.1545,
+            "samples": 3915
+          }
+        },
+        "energy_order": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 3915
+          },
+          "0.05": {
+            "certified_share": 0.0026,
+            "true_err_mean": 0.00206,
+            "oracle_share": 0.0061,
+            "samples": 3915
+          },
+          "0.1": {
+            "certified_share": 0.025,
+            "true_err_mean": 0.0351,
+            "oracle_share": 0.0547,
+            "samples": 3915
+          },
+          "0.2": {
+            "certified_share": 0.0657,
+            "true_err_mean": 0.0949,
+            "oracle_share": 0.1882,
+            "samples": 3915
+          }
+        }
+      }
+    },
+    "12": {
+      "quant_output_err": {
+        "2": 0.06209,
+        "3": 0.01124,
+        "4": 0.00244
+      },
+      "shared_basis": {
+        "192": {
+          "err_f32_coeffs": 0.4387,
+          "err_4bit_coeffs": 0.44082,
+          "bytes_ratio_vs_q2k": 0.208
+        },
+        "384": {
+          "err_f32_coeffs": 0.34775,
+          "err_4bit_coeffs": 0.35011,
+          "bytes_ratio_vs_q2k": 0.417
+        },
+        "576": {
+          "err_f32_coeffs": 0.27917,
+          "err_4bit_coeffs": 0.28155,
+          "bytes_ratio_vs_q2k": 0.625
+        },
+        "768": {
+          "err_f32_coeffs": 0.2227,
+          "err_4bit_coeffs": 0.22519,
+          "bytes_ratio_vs_q2k": 0.833
+        },
+        "1152": {
+          "err_f32_coeffs": 0.13561,
+          "err_4bit_coeffs": 0.13834,
+          "bytes_ratio_vs_q2k": 1.25
+        }
+      },
+      "attention_lowrank": {
+        "q": {
+          "quant3_err": 0.00406,
+          "quant4_err": 0.00089,
+          "rank": {
+            "64": {
+              "err": 0.07604,
+              "params_ratio": 0.047
+            },
+            "128": {
+              "err": 0.05508,
+              "params_ratio": 0.094
+            },
+            "256": {
+              "err": 0.03624,
+              "params_ratio": 0.188
+            },
+            "384": {
+              "err": 0.02669,
+              "params_ratio": 0.281
+            },
+            "512": {
+              "err": 0.02057,
+              "params_ratio": 0.375
+            }
+          }
+        },
+        "k": {
+          "quant3_err": 0.00717,
+          "quant4_err": 0.00153,
+          "rank": {
+            "64": {
+              "err": 0.11077,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.0581,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.01927,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.00547,
+              "params_ratio": 0.938
+            }
+          }
+        },
+        "v": {
+          "quant3_err": 0.03043,
+          "quant4_err": 0.00661,
+          "rank": {
+            "64": {
+              "err": 0.57082,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.40087,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.19003,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.06497,
+              "params_ratio": 0.938
+            }
+          }
+        }
+      },
+      "certified_skip": {
+        "natural": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 3913
+          },
+          "0.05": {
+            "certified_share": 0.0001,
+            "true_err_mean": 5e-05,
+            "oracle_share": 0.0001,
+            "samples": 3913
+          },
+          "0.1": {
+            "certified_share": 0.0038,
+            "true_err_mean": 0.00664,
+            "oracle_share": 0.0142,
+            "samples": 3913
+          },
+          "0.2": {
+            "certified_share": 0.0438,
+            "true_err_mean": 0.10953,
+            "oracle_share": 0.1041,
+            "samples": 3913
+          }
+        },
+        "energy_order": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 3913
+          },
+          "0.05": {
+            "certified_share": 0.0001,
+            "true_err_mean": 8e-05,
+            "oracle_share": 0.0003,
+            "samples": 3913
+          },
+          "0.1": {
+            "certified_share": 0.0075,
+            "true_err_mean": 0.01291,
+            "oracle_share": 0.0209,
+            "samples": 3913
+          },
+          "0.2": {
+            "certified_share": 0.046,
+            "true_err_mean": 0.10467,
+            "oracle_share": 0.1167,
+            "samples": 3913
+          }
+        }
+      }
+    },
+    "24": {
+      "quant_output_err": {
+        "2": 0.05027,
+        "3": 0.00912,
+        "4": 0.00199
+      },
+      "shared_basis": {
+        "192": {
+          "err_f32_coeffs": 0.34783,
+          "err_4bit_coeffs": 0.3496,
+          "bytes_ratio_vs_q2k": 0.208
+        },
+        "384": {
+          "err_f32_coeffs": 0.28397,
+          "err_4bit_coeffs": 0.28589,
+          "bytes_ratio_vs_q2k": 0.417
+        },
+        "576": {
+          "err_f32_coeffs": 0.23123,
+          "err_4bit_coeffs": 0.23326,
+          "bytes_ratio_vs_q2k": 0.625
+        },
+        "768": {
+          "err_f32_coeffs": 0.18486,
+          "err_4bit_coeffs": 0.18694,
+          "bytes_ratio_vs_q2k": 0.833
+        },
+        "1152": {
+          "err_f32_coeffs": 0.11149,
+          "err_4bit_coeffs": 0.11368,
+          "bytes_ratio_vs_q2k": 1.25
+        }
+      },
+      "attention_lowrank": {
+        "q": {
+          "quant3_err": 0.00469,
+          "quant4_err": 0.00103,
+          "rank": {
+            "64": {
+              "err": 0.06945,
+              "params_ratio": 0.047
+            },
+            "128": {
+              "err": 0.04966,
+              "params_ratio": 0.094
+            },
+            "256": {
+              "err": 0.03198,
+              "params_ratio": 0.188
+            },
+            "384": {
+              "err": 0.02297,
+              "params_ratio": 0.281
+            },
+            "512": {
+              "err": 0.01718,
+              "params_ratio": 0.375
+            }
+          }
+        },
+        "k": {
+          "quant3_err": 0.00813,
+          "quant4_err": 0.00184,
+          "rank": {
+            "64": {
+              "err": 0.0932,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.04683,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.01398,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.00319,
+              "params_ratio": 0.938
+            }
+          }
+        },
+        "v": {
+          "quant3_err": 0.02624,
+          "quant4_err": 0.00565,
+          "rank": {
+            "64": {
+              "err": 0.46286,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.32256,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.14716,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.04661,
+              "params_ratio": 0.938
+            }
+          }
+        }
+      },
+      "certified_skip": {
+        "natural": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4285
+          },
+          "0.05": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4285
+          },
+          "0.1": {
+            "certified_share": 0.0024,
+            "true_err_mean": 0.00432,
+            "oracle_share": 0.0124,
+            "samples": 4285
+          },
+          "0.2": {
+            "certified_share": 0.0426,
+            "true_err_mean": 0.11074,
+            "oracle_share": 0.1001,
+            "samples": 4285
+          }
+        },
+        "energy_order": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4285
+          },
+          "0.05": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0001,
+            "samples": 4285
+          },
+          "0.1": {
+            "certified_share": 0.0052,
+            "true_err_mean": 0.00896,
+            "oracle_share": 0.0191,
+            "samples": 4285
+          },
+          "0.2": {
+            "certified_share": 0.0443,
+            "true_err_mean": 0.1046,
+            "oracle_share": 0.1138,
+            "samples": 4285
+          }
+        }
+      }
+    },
+    "36": {
+      "quant_output_err": {
+        "2": 0.05827,
+        "3": 0.01056,
+        "4": 0.00229
+      },
+      "shared_basis": {
+        "192": {
+          "err_f32_coeffs": 0.34261,
+          "err_4bit_coeffs": 0.34481,
+          "bytes_ratio_vs_q2k": 0.208
+        },
+        "384": {
+          "err_f32_coeffs": 0.28463,
+          "err_4bit_coeffs": 0.28702,
+          "bytes_ratio_vs_q2k": 0.417
+        },
+        "576": {
+          "err_f32_coeffs": 0.23307,
+          "err_4bit_coeffs": 0.23551,
+          "bytes_ratio_vs_q2k": 0.625
+        },
+        "768": {
+          "err_f32_coeffs": 0.18797,
+          "err_4bit_coeffs": 0.19044,
+          "bytes_ratio_vs_q2k": 0.833
+        },
+        "1152": {
+          "err_f32_coeffs": 0.11654,
+          "err_4bit_coeffs": 0.11924,
+          "bytes_ratio_vs_q2k": 1.25
+        }
+      },
+      "attention_lowrank": {
+        "q": {
+          "quant3_err": 0.00558,
+          "quant4_err": 0.00121,
+          "rank": {
+            "64": {
+              "err": 0.06321,
+              "params_ratio": 0.047
+            },
+            "128": {
+              "err": 0.04441,
+              "params_ratio": 0.094
+            },
+            "256": {
+              "err": 0.02873,
+              "params_ratio": 0.188
+            },
+            "384": {
+              "err": 0.0207,
+              "params_ratio": 0.281
+            },
+            "512": {
+              "err": 0.0155,
+              "params_ratio": 0.375
+            }
+          }
+        },
+        "k": {
+          "quant3_err": 0.00823,
+          "quant4_err": 0.0017,
+          "rank": {
+            "64": {
+              "err": 0.07278,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.03688,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.01092,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.00241,
+              "params_ratio": 0.938
+            }
+          }
+        },
+        "v": {
+          "quant3_err": 0.03207,
+          "quant4_err": 0.0069,
+          "rank": {
+            "64": {
+              "err": 0.41047,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.28367,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.128,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.037,
+              "params_ratio": 0.938
+            }
+          }
+        }
+      },
+      "certified_skip": {
+        "natural": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4063
+          },
+          "0.05": {
+            "certified_share": 0.0,
+            "true_err_mean": 3e-05,
+            "oracle_share": 0.0002,
+            "samples": 4063
+          },
+          "0.1": {
+            "certified_share": 0.0045,
+            "true_err_mean": 0.00769,
+            "oracle_share": 0.0183,
+            "samples": 4063
+          },
+          "0.2": {
+            "certified_share": 0.0439,
+            "true_err_mean": 0.10594,
+            "oracle_share": 0.1106,
+            "samples": 4063
+          }
+        },
+        "energy_order": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4063
+          },
+          "0.05": {
+            "certified_share": 0.0001,
+            "true_err_mean": 0.00011,
+            "oracle_share": 0.0007,
+            "samples": 4063
+          },
+          "0.1": {
+            "certified_share": 0.0116,
+            "true_err_mean": 0.01895,
+            "oracle_share": 0.0323,
+            "samples": 4063
+          },
+          "0.2": {
+            "certified_share": 0.0495,
+            "true_err_mean": 0.09805,
+            "oracle_share": 0.1415,
+            "samples": 4063
+          }
+        }
+      }
+    },
+    "45": {
+      "quant_output_err": {
+        "2": 0.05515,
+        "3": 0.01002,
+        "4": 0.00218
+      },
+      "shared_basis": {
+        "192": {
+          "err_f32_coeffs": 0.28133,
+          "err_4bit_coeffs": 0.28407,
+          "bytes_ratio_vs_q2k": 0.208
+        },
+        "384": {
+          "err_f32_coeffs": 0.2329,
+          "err_4bit_coeffs": 0.23575,
+          "bytes_ratio_vs_q2k": 0.417
+        },
+        "576": {
+          "err_f32_coeffs": 0.19403,
+          "err_4bit_coeffs": 0.19706,
+          "bytes_ratio_vs_q2k": 0.625
+        },
+        "768": {
+          "err_f32_coeffs": 0.15978,
+          "err_4bit_coeffs": 0.16287,
+          "bytes_ratio_vs_q2k": 0.833
+        },
+        "1152": {
+          "err_f32_coeffs": 0.1001,
+          "err_4bit_coeffs": 0.10333,
+          "bytes_ratio_vs_q2k": 1.25
+        }
+      },
+      "attention_lowrank": {
+        "q": {
+          "quant3_err": 0.00802,
+          "quant4_err": 0.00175,
+          "rank": {
+            "64": {
+              "err": 0.03284,
+              "params_ratio": 0.047
+            },
+            "128": {
+              "err": 0.01978,
+              "params_ratio": 0.094
+            },
+            "256": {
+              "err": 0.01188,
+              "params_ratio": 0.188
+            },
+            "384": {
+              "err": 0.0085,
+              "params_ratio": 0.281
+            },
+            "512": {
+              "err": 0.0065,
+              "params_ratio": 0.375
+            }
+          }
+        },
+        "k": {
+          "quant3_err": 0.01285,
+          "quant4_err": 0.00275,
+          "rank": {
+            "64": {
+              "err": 0.05827,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.0136,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.00213,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.00046,
+              "params_ratio": 0.938
+            }
+          }
+        },
+        "v": {
+          "quant3_err": 0.02804,
+          "quant4_err": 0.0062,
+          "rank": {
+            "64": {
+              "err": 0.33308,
+              "params_ratio": 0.156
+            },
+            "128": {
+              "err": 0.02613,
+              "params_ratio": 0.312
+            },
+            "256": {
+              "err": 0.00622,
+              "params_ratio": 0.625
+            },
+            "384": {
+              "err": 0.0021,
+              "params_ratio": 0.938
+            }
+          }
+        }
+      },
+      "certified_skip": {
+        "natural": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4653
+          },
+          "0.05": {
+            "certified_share": 0.0021,
+            "true_err_mean": 0.00147,
+            "oracle_share": 0.0059,
+            "samples": 4653
+          },
+          "0.1": {
+            "certified_share": 0.0235,
+            "true_err_mean": 0.03374,
+            "oracle_share": 0.0495,
+            "samples": 4653
+          },
+          "0.2": {
+            "certified_share": 0.0636,
+            "true_err_mean": 0.09761,
+            "oracle_share": 0.1745,
+            "samples": 4653
+          }
+        },
+        "energy_order": {
+          "0.01": {
+            "certified_share": 0.0,
+            "true_err_mean": 0.0,
+            "oracle_share": 0.0,
+            "samples": 4653
+          },
+          "0.05": {
+            "certified_share": 0.0104,
+            "true_err_mean": 0.00655,
+            "oracle_share": 0.0266,
+            "samples": 4653
+          },
+          "0.1": {
+            "certified_share": 0.0447,
+            "true_err_mean": 0.04729,
+            "oracle_share": 0.1077,
+            "samples": 4653
+          },
+          "0.2": {
+            "certified_share": 0.0971,
+            "true_err_mean": 0.09069,
+            "oracle_share": 0.2797,
+            "samples": 4653
+          }
+        }
+      }
+    }
+  },
+  "fit_tokens": 1800,
+  "held_tokens": 900
+}

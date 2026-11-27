@@ -1,0 +1,53 @@
+{
+  "label": "ikllama",
+  "model": "<dir>/Qwen3-30B-A3B-Instruct-2507-UD-Q2_K_XL.gguf",
+  "rounds": 2,
+  "reps": 6,
+  "max_tokens": 128,
+  "load_start": 7.6083984375,
+  "load_end": 13.35400390625,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 63,
+      "completion_tokens": 128,
+      "decode_tok_s": 18.8,
+      "decode_all": [
+        16.7,
+        19.13,
+        18.81,
+        18.81,
+        18.55,
+        18.8
+      ],
+      "pp_tok_s": 87.1
+    },
+    "ctx500": {
+      "prompt_tokens": 524,
+      "completion_tokens": 128,
+      "decode_tok_s": 17.73,
+      "decode_all": [
+        13.69,
+        18.07,
+        17.72,
+        17.75,
+        17.32,
+        17.81
+      ],
+      "pp_tok_s": 96.5
+    },
+    "ctx2000": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 128,
+      "decode_tok_s": 15.43,
+      "decode_all": [
+        15.54,
+        15.56,
+        15.21,
+        15.34,
+        15.44,
+        15.42
+      ],
+      "pp_tok_s": 83.2
+    }
+  }
+}

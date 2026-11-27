@@ -1,0 +1,64 @@
+{
+  "label": "qwen17_r2",
+  "model": "qwen3-1.7b",
+  "reps": 3,
+  "max_tokens": 128,
+  "load_start": 12.7939453125,
+  "contexts": {
+    "ctx0": {
+      "prompt_tokens": 67,
+      "completion_tokens": 128,
+      "decode_tok_s": 25.14,
+      "pp_tok_s": 205.77,
+      "prefill_s": 0.29,
+      "wall_s": 5.4,
+      "decode_all": [
+        25.47,
+        23.18,
+        25.14
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx500": {
+      "prompt_tokens": 528,
+      "completion_tokens": 128,
+      "decode_tok_s": 22.93,
+      "pp_tok_s": 216.07,
+      "prefill_s": 2.41,
+      "wall_s": 7.87,
+      "decode_all": [
+        22.93,
+        21.66,
+        25.13
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    },
+    "ctx2000": {
+      "prompt_tokens": 2092,
+      "completion_tokens": 128,
+      "decode_tok_s": 22.4,
+      "pp_tok_s": 179.04,
+      "prefill_s": 11.73,
+      "wall_s": 17.45,
+      "decode_all": [
+        21.09,
+        22.4,
+        22.5
+      ],
+      "completion_all": [
+        128,
+        128,
+        128
+      ]
+    }
+  },
+  "load_end": 13.921875
+}
